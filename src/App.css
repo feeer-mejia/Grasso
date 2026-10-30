@@ -1,0 +1,189 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap");
+
+:root {
+  --fondo: #f2f4f7;
+  --papel: #ffffff;
+  --tinta: #101828;
+  --suave: #667085;
+  --linea: #e4e7ec;
+  --linea-fuerte: #cfd4dc;
+  --acento: #3f3fd8;
+  --rojo: #c4302b;
+  --rojo-fondo: #fdeceb;
+  --rojo-borde: #efb4b1;
+  --verde: #16794c;
+  --verde-fondo: #e6f5ec;
+  --radio: 14px;
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--tinta);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #0d1117;
+    --papel: #161b22;
+    --tinta: #e6edf3;
+    --suave: #8b949e;
+    --linea: #2a313a;
+    --linea-fuerte: #3b444f;
+    --acento: #8f95ff;
+    --rojo: #ff8a82;
+    --rojo-fondo: #3a1d20;
+    --rojo-borde: #6e2f33;
+    --verde: #5fd394;
+    --verde-fondo: #14301f;
+  }
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--fondo); -webkit-font-smoothing: antialiased; }
+button { font: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+
+/* Franja tornasol: guiño al vinil, es el único toque de color de la app */
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto 0; height: 4px; z-index: 20;
+  background: linear-gradient(90deg, #7c8cff, #6fe0d0 35%, #f2a6e6 65%, #ffd89b);
+}
+
+.app, .login { max-width: 680px; margin: 0 auto; padding: 0 14px 56px; }
+.msg { text-align: center; color: var(--suave); padding: 28px 0; }
+.error { color: var(--rojo); font-weight: 700; }
+
+/* Barra fija */
+.barra {
+  position: sticky; top: 0; z-index: 5; background: var(--fondo);
+  margin: 0 -14px; padding: 16px 14px 10px;
+}
+header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+header h1 { margin: 0; font-size: 1.4rem; font-weight: 800; letter-spacing: -0.025em; }
+header div { display: flex; gap: 4px; }
+header button:first-child {
+  background: var(--papel); border: 1px solid var(--linea-fuerte); border-radius: 10px;
+  padding: 8px 12px; font-size: 0.85rem; font-weight: 700; color: var(--tinta);
+}
+header button:last-child {
+  background: none; border: 0; padding: 8px 10px; font-size: 0.85rem; font-weight: 700; color: var(--suave);
+}
+header button:disabled { opacity: 0.5; cursor: default; }
+
+nav {
+  display: flex; gap: 2px; background: var(--linea); padding: 4px;
+  border-radius: 12px; margin: 14px 0 10px; overflow-x: auto;
+}
+nav button {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+  border: 0; background: transparent; border-radius: 9px; padding: 9px 8px;
+  font-size: 0.88rem; font-weight: 700; color: var(--suave); white-space: nowrap;
+}
+nav button.activa { background: var(--papel); color: var(--tinta); box-shadow: 0 1px 2px rgba(16, 24, 40, 0.14); }
+.punto { background: var(--rojo); color: var(--papel); border-radius: 999px; font-size: 0.7rem; font-weight: 800; padding: 1px 7px; }
+
+.buscar {
+  width: 100%; font: inherit; color: var(--tinta); padding: 11px 12px 11px 38px;
+  border: 1px solid var(--linea-fuerte); border-radius: 12px; background-color: var(--papel);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: 12px center; background-size: 16px;
+}
+
+/* Tarjetas */
+section { display: grid; gap: 10px; margin-top: 6px; }
+.tarjeta { background: var(--papel); border: 1px solid var(--linea); border-radius: var(--radio); overflow: hidden; }
+details[open].tarjeta { border-color: var(--linea-fuerte); }
+.tarjeta.fila { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px; }
+
+.cab { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; flex: 1; }
+summary.cab { position: relative; padding: 15px 40px 15px 14px; cursor: pointer; list-style: none; }
+summary.cab::-webkit-details-marker { display: none; }
+summary.cab::after {
+  content: ""; position: absolute; right: 16px; top: 50%; width: 8px; height: 8px;
+  border-right: 2px solid var(--suave); border-bottom: 2px solid var(--suave);
+  transform: translateY(-70%) rotate(45deg);
+}
+details[open] > summary.cab { border-bottom: 1px solid var(--linea); }
+details[open] > summary.cab::after { transform: translateY(-30%) rotate(-135deg); }
+
+.nombre { font-weight: 700; font-size: 0.98rem; }
+.total { margin-left: auto; color: var(--suave); font-size: 0.82rem; font-weight: 600; }
+.tarjeta.fila .total { margin-left: 0; }
+.aviso {
+  display: inline-flex; align-items: center; gap: 5px; background: var(--rojo-fondo); color: var(--rojo);
+  border-radius: 999px; padding: 2px 9px; font-size: 0.75rem; font-weight: 800;
+}
+.aviso::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--rojo); }
+
+/* Tabla de tallas */
+table { width: 100%; border-collapse: collapse; }
+thead th { font-size: 0.8rem; color: var(--suave); font-weight: 700; padding: 10px 6px 6px; }
+thead th:nth-child(n + 2)::before {
+  content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+  margin-right: 6px; vertical-align: -1px; border: 1px solid var(--linea-fuerte);
+}
+thead th:nth-child(2)::before { background: #ffffff; }
+thead th:nth-child(3)::before { background: #101828; }
+tbody tr + tr th, tbody tr + tr td { border-top: 1px solid var(--linea); }
+tbody th { text-align: left; padding: 6px 6px 6px 14px; width: 3.6rem; font-size: 0.9rem; font-weight: 800; }
+td { padding: 6px; text-align: center; }
+
+/* Contador: - [número] + */
+.contador {
+  display: inline-flex; align-items: center; overflow: hidden;
+  border: 1px solid var(--linea-fuerte); border-radius: 12px; background: var(--papel);
+}
+.contador button { width: 40px; height: 40px; border: 0; background: transparent; font-size: 1.3rem; line-height: 1; color: var(--tinta); }
+.contador button:last-child { color: var(--acento); }
+.contador button:hover:not(:disabled) { background: var(--fondo); }
+.contador button:active:not(:disabled) { background: var(--linea); }
+.contador button:disabled { color: var(--linea-fuerte); cursor: default; }
+.contador input {
+  width: 2.9rem; height: 40px; text-align: center; font: inherit; font-weight: 800; color: var(--tinta);
+  border: 0; border-left: 1px solid var(--linea); border-right: 1px solid var(--linea);
+  border-radius: 0; background: transparent; -moz-appearance: textfield; appearance: textfield;
+}
+.contador input::-webkit-inner-spin-button, .contador input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.contador input:focus { outline: 2px solid var(--acento); outline-offset: -2px; background: var(--papel); }
+.contador.bajo { border-color: var(--rojo-borde); background: var(--rojo-fondo); }
+.contador.bajo input { color: var(--rojo); border-color: var(--rojo-borde); }
+
+/* Historial */
+.tarjeta.mov { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; align-items: center; padding: 12px 14px; }
+.mas, .menos {
+  grid-row: span 2; min-width: 2.8rem; text-align: center; padding: 8px 0;
+  border-radius: 10px; font-weight: 800; font-variant-numeric: tabular-nums;
+}
+.mas { background: var(--verde-fondo); color: var(--verde); }
+.menos { background: var(--rojo-fondo); color: var(--rojo); }
+.tarjeta.mov .nombre, .tarjeta.mov small { grid-column: 2; }
+.tarjeta.mov small { color: var(--suave); font-size: 0.78rem; }
+
+/* Pantalla vacía y botón principal */
+.vacio { background: var(--papel); border: 1.5px dashed var(--linea-fuerte); border-radius: var(--radio); padding: 24px 20px; text-align: center; margin-top: 8px; }
+.primario { background: var(--tinta); color: var(--papel); border: 0; border-radius: 12px; padding: 13px 18px; font-weight: 800; }
+
+/* Login */
+.login {
+  max-width: 400px; margin: 10vh auto 0; padding: 28px 24px;
+  background: var(--papel); border: 1px solid var(--linea); border-radius: 20px;
+}
+.login h1 { margin: 0 0 4px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.025em; }
+.login p { color: var(--suave); margin: 0; }
+.login .error { color: var(--rojo); font-size: 0.9rem; }
+.login form { display: grid; gap: 10px; margin-top: 20px; }
+.login input {
+  font: inherit; color: var(--tinta); padding: 13px 14px; background: var(--papel);
+  border: 1px solid var(--linea-fuerte); border-radius: 12px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  summary.cab::after { transition: transform 0.15s; }
+  .contador button { transition: background 0.1s; }
+}
+
+/* --- Logo --- */
+.marca { display: flex; align-items: center; line-height: 0; }
+.logo { height: 30px; width: auto; display: block; }
+.logo-login { height: 52px; width: auto; display: block; margin: 0 0 14px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (prefers-color-scheme: dark) {
+  .logo, .logo-login { filter: invert(1); }
+}
